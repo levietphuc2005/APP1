@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(
-  MaterialApp(
+ const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: HomePage(),
   )
 );
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -19,25 +20,26 @@ class _HomePageState extends State<HomePage>
   late AnimationController _controller;
 
   @override
-  Widget Build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
+      backgroundColor: const Color.fromRGBO(244, 243, 243, 1),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.black87,),
+          icon: const Icon(Icons.menu, color: Colors.black87,),
           onPressed: (){},
-        ),),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              padding: EdgeInsets.all(20.0),
-              child: Column(
+              padding:const EdgeInsets.all(20.0),
+              child: const Column(
                 children: <Widget>[
                   Text('ABC')
                 ],
@@ -45,12 +47,7 @@ class _HomePageState extends State<HomePage>
             )
           ],
         ),
-      )
+      ),
     );
   }
-  
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }}
+}

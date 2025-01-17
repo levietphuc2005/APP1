@@ -7,7 +7,8 @@
         {
             "name": "photo_memory",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/Login_page.dart"
         },
         {
             "name": "photo_memory (profile mode)",
@@ -21,5 +22,6 @@
             "type": "dart",
             "flutterMode": "release"
         }
+        
     ]
 }
