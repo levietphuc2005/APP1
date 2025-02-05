@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:photo_memory/Login_page.dart';
 
 void main() => runApp(
- const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: HomePage(),
-  )
-);
+      const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LoginPage(),
+      ),
+    );
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  // ignore: unused_field
-  late AnimationController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +19,29 @@ class _HomePageState extends State<HomePage>
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black87,),
-          onPressed: (){},
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black87,
+          ),
+          onPressed: () {},
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Go to Login'),
+          onPressed: () {
+            // Điều hướng sang trang Login
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
               ),
-              padding:const EdgeInsets.all(20.0),
-              child: const Column(
-                children: <Widget>[
-                  Text('ABC')
-                ],
-              ),
-            )
-          ],
+            );
+          },
         ),
       ),
+     
     );
+    
   }
 }
