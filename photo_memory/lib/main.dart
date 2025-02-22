@@ -1,11 +1,16 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-// ignore: unused_import
+import 'package:photo_memory/Screens/Home_screen.dart';
 import 'package:photo_memory/Login_page.dart';
-
+import 'package:photo_memory/Screens/Add_screen.dart';
+import 'package:photo_memory/Screens/ServerList_screen.dart';
+import 'package:photo_memory/Screens/Status_screen.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: LoginPage(), // Chạy LoginPage trước
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -20,9 +25,10 @@ class _MyAppState extends State<MyApp> {
   bool _isDarkMode = false;
 
   final List<Widget> _pages = [
-    const HomePage(),
-    const HomePage(),
-    const HomePage(),
+    const HomeScreen(),   // Trang chính
+    const AddScreen(),    // Trang thêm mới
+    const ListScreen(),   // Danh sách
+    const TimelineScreen() // Lịch sử
   ];
 
   void _onItemTapped(int index) {
@@ -44,16 +50,19 @@ class _MyAppState extends State<MyApp> {
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {},
+          ),
           title: const Text('Server Status Checker'),
-          //backgroundColor: const Color.fromARGB(255, 135, 213, 47),
+          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
               onPressed: _toggleDarkMode,
             ),
             PopupMenuButton(
-              // ignore: avoid_types_as_parameter_names
-              itemBuilder: (BuildContext) {
+              itemBuilder: (BuildContext context) {
                 return [
                   const PopupMenuItem(child: Text('Settings')),
                   const PopupMenuItem(child: Text('Log out')),
@@ -62,33 +71,42 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body: _pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          //backgroundColor: Colors.green,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'List'),
-            BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Update'),
-          ],
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          onItemTapped: _onItemTapped,
         ),
       ),
     );
   }
+  
 }
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onItemTapped;
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const CustomBottomNavigationBar({
+    required this.currentIndex,
+    required this.onItemTapped,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        elevation: 0,
-      ),
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onItemTapped,
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add"),
+        BottomNavigationBarItem(icon: Icon(Icons.list), label: "List"),
+        BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: "Status"),
+      ],
     );
   }
 }
