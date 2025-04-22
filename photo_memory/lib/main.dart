@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:photo_memory/Screens/Home_screen.dart';
@@ -9,7 +9,7 @@ import 'package:photo_memory/Screens/Status_screen.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: LoginPage(), // Chạy LoginPage trước
+    home: MyApp(), // Chạy LoginPage trước
   ));
 }
 
@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _pages = [
     const HomeScreen(),   // Trang chính
-    const AddScreen(),    // Trang thêm mới
+    const LoginPage(),    // Trang thêm mới
     const ListScreen(),   // Danh sách
     const TimelineScreen() // Lịch sử
   ];
@@ -60,14 +60,6 @@ class _MyAppState extends State<MyApp> {
             IconButton(
               icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
               onPressed: _toggleDarkMode,
-            ),
-            PopupMenuButton(
-              itemBuilder: (BuildContext context) {
-                return [
-                  const PopupMenuItem(child: Text('Settings')),
-                  const PopupMenuItem(child: Text('Log out')),
-                ];
-              },
             ),
           ],
         ),
@@ -104,7 +96,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add"),
-        BottomNavigationBarItem(icon: Icon(Icons.list), label: "List"),
         BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: "Status"),
       ],
     );

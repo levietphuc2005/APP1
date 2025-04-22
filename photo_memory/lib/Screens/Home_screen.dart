@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,23 +9,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      extendBodyBehindAppBar: true, // nếu muốn hiệu ứng kéo dài ra sau AppBar
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildTransparentCard("Card 1", Icons.star, context),
+              buildTransparentCard("Ram", Icons.api, context, Colors.black),
               const SizedBox(height: 10),
-              buildTransparentCard("Card 2", Icons.favorite, context),
+              buildTransparentCard("Download", Icons.download, context, Colors.black),
               const SizedBox(height: 10),
-              buildTransparentCard("Card 3", Icons.lightbulb, context),
+              buildTransparentCard("Process", Icons.receipt, context, Colors.black),
               const SizedBox(height: 10),
-              buildTransparentCard("Card 4", Icons.settings, context),
-              const SizedBox(height: 10),
-              buildTransparentCard("Card 4", Icons.settings, context),
-              const SizedBox(height: 10),
-              buildTransparentCard("Card 4", Icons.settings, context),
+              buildTransparentCard("Done", Icons.timelapse, context, Colors.black),
             ],
           ),
         ),
@@ -32,38 +29,62 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildTransparentCard(String title, IconData icon, BuildContext context) {
-    return InkWell(
-      //onTap: () {
-        //ScaffoldMessenger.of(context).showSnackBar(
-          //SnackBar(content: Text("$title Clicked!")),
-        //);
-      //},
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        color: Colors.white.withOpacity(0.3), // Độ trong suốt
-        child: Container(
-          height: 100,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: Colors.white, size: 32),
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+  Widget buildTransparentCard(String title, IconData icon, BuildContext context,Color iconColor) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        double opacity = 1.0;
+
+        return InkWell(
+          onTap: () {
+            setState(() {
+              opacity = 0.5;
+            });
+            Future.delayed(const Duration(milliseconds: 150), () {
+              setState(() {
+                opacity = 1.0;
+              });
+            });
+          },
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 150),
+            opacity: opacity,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  height: 100,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors. black.withOpacity(0.4),
+                      width: 1.2,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(icon, color: iconColor, size: 32),
+                      const SizedBox(width: 10),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

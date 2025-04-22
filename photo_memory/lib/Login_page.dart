@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.cloud, color: Colors.white),
-                  labelText: "Server Name",
+                  labelText: "Server Address",
                   labelStyle: const TextStyle(color: Colors.white70),
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.1),
